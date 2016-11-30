@@ -2,7 +2,7 @@
 
 This [repo](https://bitbucket.org/cgirabawe/nyc-taxi/src/f0ec01999d9b?at=master) contains submissions files to the Capital One data science challenge.
 
-## Files for this work ##
+## Contents ##
 
 1. [The report](https://github.com/kthouz/NYC_Green_Taxi/blob/master/NYC%20Green%20Taxi/NYC%20Green%20Taxi.md) in .md format in the subdir /NYC Green Taxi/NYC Green Taxi.md
 2. NYC Green Taxi Analysis ipython notebook ([NYC Green Taxi.ipynb](https://github.com/kthouz/NYC_Green_Taxi/blob/master/NYC%20Green%20Taxi.ipynb))
