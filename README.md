@@ -1,6 +1,6 @@
 # [NYC Green Taxi](https://github.com/kthouz/NYC_Green_Taxi)#
 
-This [repo](https://github.com/kthouz/NYC_Green_Taxi) is about New York Green Taxi.
+This [repo](https://github.com/kthouz/NYC_Green_Taxi) is about New York City Green Taxi.
 The [report](https://github.com/kthouz/NYC_Green_Taxi/blob/master/NYC%20Green%20Taxi/NYC%20Green%20Taxi.md) start with simple statistical questions and answer to validate (data cleaning and munging) the dataset and mine insights. Then it enters into creating a model to predict the tip to expect after each ride.
 
 ## Contents ##
