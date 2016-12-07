@@ -1,7 +1,19 @@
----
-output: html_document
----
+# [NYC Green Taxi](https://bitbucket.org/cgirabawe/nyc-taxi/src/f0ec01999d9b?at=master)#
 
+This [repo](https://bitbucket.org/cgirabawe/nyc-taxi/src/f0ec01999d9b?at=master) contains submissions files to the Capital One data science challenge.
+
+## Contents of the repo ##
+
+1. [The report](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b/NYC%20Green%20Taxi/NYC%20Green%20Taxi.md?at=master&fileviewer=file-view-default) in .md format in the subdir /NYC Green Taxi/NYC Green Taxi.md
+2. NYC Green Taxi ipython notebook (NYC Green Taxi.ipynb)
+3. The script to run predictions (tip_predictor.py)
+4. The pickle of my classifier model (my_classifier.pkl)
+5. The pickle of my regression model (my_regressor.pkl)
+6. A notebook example of how use tip_predictor.py to make predictions (test.ipynb)
+7. A [csv](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b/submission.csv?at=master) of predictions made on the 2015 September dataset. This has two columns. First if transaction index, second is the predicted percentage tip
+8. A [schema](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b/schema.png?at=master&fileviewer=file-view-default) of the directory
+
+This entire [repo](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b?at=master) is also available on my bitbucket
 
 ```python
 import pandas as pd
@@ -21,30 +33,17 @@ from shapely.geometry import Point,Polygon,MultiPoint
 import warnings
 warnings.filterwarnings('ignore')
 ```
+# Analysis
 
-# NYC Green Taxi - Report
+In this notebook, I will explore data on New York City Green Taxi. I will start with some warm up questions about the dataset. Later, I will build a model to predict the percentage tip a driver would exepect on each trip. The code is fully written in python with few additional open-source libraries easy to install. 
+- [shapely](https://pypi.python.org/pypi/Shapely)
+- [scikit learn](http://scikit-learn.org/stable/)
+- [tabulate](http://txt.arboreus.com/2013/03/13/pretty-print-tables-in-python.html)
 
-#### Files for this work ####
-
-1. [The report](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b/NYC%20Green%20Taxi/NYC%20Green%20Taxi.md?at=master&fileviewer=file-view-default) in .md format in the subdir /NYC Green Taxi/NYC Green Taxi.md
-2. NYC Green Taxi ipython notebook (NYC Green Taxi.ipynb)
-3. The script to run predictions (tip_predictor.py)
-4. The pickle of my classifier model (my_classifier.pkl)
-5. The pickle of my regression model (my_regressor.pkl)
-6. A notebook example of how use tip_predictor.py to make predictions (test.ipynb)
-7. A [csv](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b/submission.csv?at=master) of predictions made on the 2015 September dataset. This has two columns. First if transaction index, second is the predicted percentage tip
-8. A [schema](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b/schema.png?at=master&fileviewer=file-view-default) of the directory
-
-This entire [repo](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b?at=master) is also available on my bitbucket
+## Warm up
 
 
-## Required Questions
-
-
-### Question 1
-
-- Programmatically download and load into your favorite analytical tool the trip data for September 2015.
-- Report how many rows and columns of data you have loaded.
+***Let's first download the dataset and print out the its size***
 
 
 ```python
@@ -65,9 +64,7 @@ print "Number of columns: ", data.shape[1]
     Number of columns:  21
 
 
-### Question 2
-
-***1. Plot a histogram of the number of the trip distance ("Trip Distance")***
+***Let's have a look at the distribution of trip distance***
 
 
 ```python
@@ -105,18 +102,14 @@ plt.show()
 ```
 
 
-![png](output_5_0.png)
+![png](media/output_5_0.png)
 
 
- ***2. Report any structure you find and any hypotheses you have about that structure.***
-
-The Trip Distance is asymmetrically distributed. It is skewed to the right and it has a median smaller than its mean and both smaller than the standard deviation. The skewness is due to the fact that the variable has a lower boundary of 0. The distance can't be negative. **This distribution has a structure of a lognormal distribution**.(http://www.itl.nist.gov/div898/handbook/eda/section3/eda3669.htm). To the left is plotted the distribution of the entire raw set of Trip distance. To the right, outliers have been removed before plotting. *Outliers are defined as any point located further than 3 standard deviations from the mean*
+The Trip Distance is asymmetrically distributed. It is skewed to the right and it has a median smaller than its mean and both smaller than the standard deviation. The skewness is due to the fact that the variable has a lower boundary of 0. The distance can't be negative. [**This distribution has a structure of a lognormal distribution**](http://www.itl.nist.gov/div898/handbook/eda/section3/eda3669.htm). To the left is plotted the distribution of the entire raw set of Trip distance. To the right, outliers have been removed before plotting. *Outliers are defined as any point located further than 3 standard deviations from the mean*
 
 **The hypothesis:** The trips are not random. If there were random, we would have a (symmetric) Gaussian distribution. The non-zero autocorrelation may be related the fact that people taking ride are pushed by a common cause, for instance, people rushing to work.
 
-### Question 3
-
-***1. Report mean and median trip distance grouped by hour of day***
+***Let's see if the time of the day has any impact on the trip distance***
 
 
 ```python
@@ -148,7 +141,7 @@ print tabulate(table1.values.tolist(),["Hour","Mean distance","Median distance"]
 ```
 
 
-![png](output_9_0.png)
+![png](media/output_8_0.png)
 
 
     -----Trip distance by hour of the day-----
@@ -183,7 +176,7 @@ print tabulate(table1.values.tolist(),["Hour","Mean distance","Median distance"]
 
 -> We observe long range trips in the morning and evenings. Are these people commuting to work? If so how do they get back home. The evening peak are shorter than the morning peak. I would hypothesize that people are okay to take cabs in the morning to avoid being late to their early appointments while they would take public transportation in the evening. However, this might not apply to NYC
 
-***2. We'd like to get a rough sense of identifying trips that originate or terminate at one of the NYC area airports. Can you provide a count of how many transactions fit this criteria, the average fair, and any other interesting characteristics of these trips.***
+***Let's also compare trips that originate (or terminate) from (at) one of the NYC airports. We can look at how many they are, the average fair, ...***
 
 Reading through the dictionary of variables, I found that the variable RateCodeID contains values indicating the final rate that was applied. Among those values, I realized that there is Newark and JFK which are the major airports in New York. In this part, I will use this knowledge and group data with RateCodeID 2 (JFK) and 3 (Newark). - An alternative (which I didn't due to time constraint) is to (1) get coordinates of airports from google map or http://transtats.bts.gov (2) get at least 4 points defining a rectangular buffer zone near the airport (3) build a polygon shape using shapely [https://pypi.python.org/pypi/Shapely] and (3) check if any pickup/dropoff location coordinates is within the polygon using shapely again. This method was first tried but was found to be time consuming -
 
@@ -243,18 +236,20 @@ plt.show()
 ```
 
 
-![png](output_14_0.png)
+![png](media/output_13_0.png)
 
 
 A. The trip distance distribution shows two peaks. Airport trips follow the same trend as the rest of the trips for short trips (trip distance ≤ 2miles). However, there is also an increased number of long range trips (18 miles) which might correspond to a great number people coming to airports from further residential areas. A check on google map shows that the distance between JFK and Manhattan is about 18 miles whereas Newark to Manhattan is 15 miles.
 
 B. The hourly distribution shows that the number of trips at airports peaks around 3PM while it peaks 2 hours later. On the other hand, there is a shortage in airports riders at 2AM while the rest of NYC goes completely down 3 hours later 5AM.
 
-### Question 4
-***1. Build a derived variable for tip as a percentage of the total fare.***
+## Predictive model
+In this section, I am going to guide my analysis towards building a model to predict the percentage tip
 
-*Let's do some cleaning before proceeding:*
-Since the initial charge for NYC green taxi is $2.5 (http://www.nyc.gov/html/tlc/html/passenger/taxicab_rate.shtml) plus tax, any transaction with 0 total amount is invalid or correspond to a cancelled service (not interesting here). Therefore, transactions with smaller total amount are dropped
+***1. Let's build a derived variable for tip as a percentage of the total fare.***
+
+Before we proceed with this, some cleaning is necessary. 
+Since the [initial charge for NYC green taxi is $2.5](http://www.nyc.gov/html/tlc/html/passenger/taxicab_rate.shtml), any transaction with a smaller total amount  is invalid, thus it is to be dropped
 
 
 
@@ -276,7 +271,7 @@ print "Summary: Tip percentage\n",data.Tip_percentage.describe()
     Name: Tip_percentage, dtype: float64
 
 
-***2. Does the tip percentage follow the same distribution for trips originating in upper Manhattan as those originating in the outer boroughs?***
+***2. Similarly to the comparison between trips to/from airports with the rest of the trips, it is worthy to spend more time and check wether trips originating from upper manhattan have different percentage tip.***
 
 To identify trips originating from upper manhattan:
 - From googgle map, collect latitude and longitude data of at least 12 points that approximately define the bounding box of upper Manhattan 
@@ -338,24 +333,18 @@ ax.set_title('Tip')
 ax.legend(['Non-Manhattan','Manhattah'],title='origin')
 plt.show()
 print 't-test results:', ttest_ind(v1,v2,equal_var=False)
-#print "confidence intervals:"
-#print "Non-Manhattan:",st.t.interval(0.95, len(v1)-1, loc=np.mean(v1), scale=st.sem(v1))
-#print "Manhattan:",st.t.interval(0.95, len(v2)-1, loc=np.mean(v2), scale=st.sem(v2))
-
 ```
 
 
-![png](output_22_0.png)
+![png](media/output_21_0.png)
 
 
     t-test results: Ttest_indResult(statistic=55.958566779306864, pvalue=0.0)
 
 
-The two distributions look the same however the t-test results in a zero p-vlue to imply that the two groups are different at 95% level of condidence
+The two distributions look the same however the t-test results in a zero p-value to imply that the two groups are different at 95% level of condidence
 
-***3. Build a predictive model for tip as a percentage of the total fare. Use as much of the data as you like (or all of it). We will validate a sample***
-
-### Predictive Model
+### The Model
 
 #### Summary
 The initial dataset contained 1494926 transactions with 21 time-series, categorical and numerical variables. In order to build the final model, four phases were followed (1) data cleaning, (2) feature engineering (3) exploratory data analysis and (4) model creation
@@ -369,12 +358,7 @@ During the exploration, each variable was carefully analyzed and compared to oth
 With lack of linear relationship between independent and depend variables, the predictive model was built on top of the random forest regression and gradient boosting classifier algorithms implemented in sklearn after routines to optimize best parameters. A usable script to make predictions as attached to this notebook and available in the same directory.
 
 
-The code is fully written in python with few additional open-source libraries easy to install. 
-- [shapely](https://pypi.python.org/pypi/Shapely)
-- [scikit learn](http://scikit-learn.org/stable/)
-- [tabulate](http://txt.arboreus.com/2013/03/13/pretty-print-tables-in-python.html)
-
-**Note:** The code to make predictions is provided in the same directory as tip_predictor.py and the instructions are in the recommendation part of this Question 4.
+**Note:** The code to make predictions is provided in the same directory as tip_predictor.py and the instructions are in the recommendation part of this section.
 
 Following, each part of the analysis is fully explained with accompanying python code
 
@@ -665,7 +649,7 @@ plt.show()
 ```
 
 
-![png](output_35_0.png)
+![png](media/output_33_0.png)
 
 
 Next, each variable distribution and its relationship with the Tip percentage were explored. Few functions were implemented to quickly explore those variables:
@@ -810,11 +794,11 @@ test_classification(data,'Fare_amount',[0,25])
 ```
 
 
-![png](output_39_0.png)
+![png](media/output_37_0.png)
 
 
 
-![png](output_39_1.png)
+![png](media/output_37_1.png)
 
 
     t-test if Fare_amount can be used to distinguish transaction with tip and without tip
@@ -825,7 +809,7 @@ A negative t-test value and null p-value imply that the means of Total_amount ar
 
 Using the same function, a plot of the tip percentage as function of trip duration showed a cluster of points at duration time greater than 1350 min (22 hours). 
 
-<img src="Q4_trip_duration.png">
+<img src="media/Q4_trip_duration.png">
 
 These points look like outliers since it doesn't make sense to have a trip of 22 hours within NYC. Probably, tourists can! 
 
@@ -899,7 +883,7 @@ plt.show()
 ```
 
 
-![png](output_41_0.png)
+![png](media/output_39_0.png)
 
 
 The heat map color represents the number of trips between two given boroughs. We can see that the majority of the trips  are intra-boroughs. There is a great number of trips from Brooklyn to Manhattan whereas there is no Staten Island trip that takes more than 1350 minutes. Are there specific hours for these events? Unfortunately, the distribution on the rigtht shows that the cluster behaves the same as the rest of the traffic.
@@ -922,7 +906,7 @@ plt.show()
 ```
 
 
-![png](output_43_0.png)
+![png](media/output_41_0.png)
 
 
 ***A further analysis of all continuous variables revealed similar lognormal and non-linearlity behaviors. Since there is no linear relationship between the the Tip percentage and variables, random forest algorithm will be considered to build the regression part of the model***
@@ -940,7 +924,7 @@ test_classification(data,'U_manhattan')
 
 
 
-![png](output_45_1.png)
+![png](media/output_43_1.png)
 
 
     Ttest_indResult(statistic=52.889791995361328, pvalue=0.0)
@@ -973,7 +957,7 @@ visualize_categories(data1,'Payment_type','histogram',[13,20])
 
 
 
-![png](output_47_1.png)
+![png](media/output_45_1.png)
 
 
 This distribution shows that 99.99% transactions with tips were paid by Credit Card (method 1). This variable is not a good candidate for the regression model because of this unbalanced frequenced but it is eventually an important feature to use in the classification model. An intuitive rule would be that if a rider is not paying with a credit card, there will be no tip.
@@ -1133,7 +1117,7 @@ print "Processing time:", dt.datetime.now()-tic
 
 
 
-![png](output_52_1.png)
+![png](media/output_50_1.png)
 
 
     Processing time: 0:06:14.323000
@@ -1233,7 +1217,7 @@ plot_opt_results(gs_rfr)
 
 
 
-![png](output_56_1.png)
+![png](media/output_54_1.png)
 
 
     RFR test mse: 14.7330135666
@@ -1242,7 +1226,7 @@ plot_opt_results(gs_rfr)
 
 
 
-![png](output_56_3.png)
+![png](media/output_54_3.png)
 
 
 The output shows that the optimum number of trees in 150 and that the important variables for this specific number of tree are as shown on the barchart. 
@@ -1312,25 +1296,24 @@ plt.show()
 ```
 
 
-![png](output_63_0.png)
+![png](media/output_61_0.png)
 
 
 The residual is pretty much symmetrically distributed. This indicate that the model is equally biased. The best model would be the one with mean at 0 and 0 variance
 
-#### Recommendation
+### Recommendations
 
-As a future work, I would find a transformation function that can linearlize indipendent values. I would also optimize different algorithms such as extreme gradient boosting and make a bag of multiple models as a final model. This was actually tried but failed because of the computational power. 
+- As a future work, I would find a transformation function that can linearlize indipendent values. I would also optimize different algorithms such as extreme gradient boosting and make a bag of multiple models as a final model. This was actually tried but failed because of the computational power. 
 
-The following section is the instruction on how to use the predictor script
+- The following section is the instruction on how to use the predictor script
 
 
 ```python
-
 def read_me():
     """
     This is a function to print a read me instruction
     """
-    print ("=========Introduction=========\n\nUse this code to predict the percentage tip expected after a trip in NYC green taxi. \nThe code is a predictive model that was built and trained on top of the Gradient Boosting Classifer and the Random Forest Gradient both provided in scikit-learn\n\nThe input: \npandas.dataframe with columns: This should be in the same format as downloaded from the website\n\nThe data frame go through the following pipeline:\n\t1. Cleaning\n\t2. Creation of derived variables\n\t3. Making predictions\n\nThe output:\n\tpandas.Series, two files are saved on disk,  submission.csv and cleaned_data.csv respectively.\n\nTo make predictions, run 'tip_predictor.make_predictions(data)', where data is any 2015 raw dataframe fresh from http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml\nRun tip.predictor.read_me() for further instructions\n")
+    print ("=========Introduction=========\n\nUse this code to predict the percentage tip expected after a trip in NYC green taxi. \nThe code is a predictive model that was built and trained on top of the Gradient Boosting Classifer and the Random Forest Gradient both provided in scikit-learn\n\nThe input: \npandas.dataframe with columns:This should be in the same format as downloaded from the website\n\nThe data frame go through the following pipeline:\n\t1. Cleaning\n\t2. Creation of derived variables\n\t3. Making predictions\n\nThe output:\n\tpandas.Series, two files are saved on disk,  submission.csv and cleaned_data.csv respectively.\n\nTo make predictions, run 'tip_predictor.make_predictions(data)', where data is any 2015 raw dataframe fresh from http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml\nRun tip_predictor.read_me() for further instructions\n")
 read_me()
 ```
 
@@ -1340,7 +1323,7 @@ read_me()
     The code is a predictive model that was built and trained on top of the Gradient Boosting Classifer and the Random Forest Gradient both provided in scikit-learn
     
     The input: 
-    pandas.dataframe with columns: This should be in the same format as downloaded from the website
+    pandas.dataframe with columns:This should be in the same format as downloaded from the website
     
     The data frame go through the following pipeline:
     	1. Cleaning
@@ -1351,19 +1334,14 @@ read_me()
     	pandas.Series, two files are saved on disk,  submission.csv and cleaned_data.csv respectively.
     
     To make predictions, run 'tip_predictor.make_predictions(data)', where data is any 2015 raw dataframe fresh from http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml
-    Run tip.predictor.read_me() for further instructions
+    Run tip_predictor.read_me() for further instructions
     
 
 
-### Question 5
+- This dataset is very rich of information and can be used to learn about other aspects of traffice in NYC. For instance, here I give a very small preview of an upcoming analysis of the speed
 
-- ***Build a derived variable representing the average speed over the course of a trip.***
-
-The speed and week were derived in the  in the model building process
-
-- ***Can you perform a test to determine if the average trip speeds are materially the same in all weeks of September? If you decide they are not the same, can you form a hypothesis regarding why they differ?***
-
-I will use pairwise t-student test. The null hypothesis is that the mean is the same in two tested samples
+    - Let's build a derived variable representing the average speed over the course of a trip
+    - I  perform a test to determine if the average speeds are materially the same in all weeks of September. I will use pairwise t-student test. The null hypothesis for t-test is that the mean is the same in two tested samples. We will see that the speed is not really different in all weeks. From the hypothesis test, we see that we don't have enough evidence that speeds are different in Week 2 and Week 3 are significantly different hence we fail to reject the null hypothesis at 95% level of confidence. The rest of the weeks have smaller p-values, so **we can reject the null hypothesis and say that they are significantly different. In general, the speed can be dependent of the week of the month. It would be interesting to look at data of August and October as well**
 
 
 ```python
@@ -1396,7 +1374,7 @@ print "p-values:\n",pvalues.pivot_table(index='w1',columns='w2',values='pval').T
 
 
 
-![png](output_69_1.png)
+![png](media/output_66_1.png)
 
 
     p-values:
@@ -1409,11 +1387,7 @@ print "p-values:\n",pvalues.pivot_table(index='w1',columns='w2',values='pval').T
     5   7.559201e-301   7.545484e-19   1.500152e-18  1.617255e-192   1.000000e+00
 
 
-The speed is not really different in all weeks. From the t-test and the boxplot, speeds in Week 2 and Week 3 are significantly the same at 95% level of confidence. Their pvalue is greater than 0.05. The rest of the weeks have smaller p-values, so **we can reject the null hypothesis and say that they are significantly different. In general, the speed can be dependent of the week of the month**
-
-- ***Can you build up a hypothesis of average trip speed as a function of time of day?***
-
-In this case I use anova one way on multiple samples
+        - Another interesting question is how the speed changes over the course of the day. In this case I use  one-way anova test on multiple samples. We find that the speed is different in different hours with a zero pvalue of the anova test. The boxplot reveals that traffic is faster early morning and gets really slow in the evening.
 
 
 ```python
@@ -1436,11 +1410,8 @@ plt.show()
 
 
 
-![png](output_72_1.png)
+![png](media/output_68_1.png)
 
-
-The speed is different in different hours as per boxplot and pvalue (=0.0) of the anova test. The traffic is faster early morning and gets really slow in the evening.
-Hypothesis is that the speed depends on the hour. The speed is different in every hour
 
 
 ```python
