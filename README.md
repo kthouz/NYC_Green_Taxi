@@ -39,6 +39,7 @@ In this notebook, I will explore data on New York City Green Taxi. I will start 
 - [shapely](https://pypi.python.org/pypi/Shapely)
 - [scikit learn](http://scikit-learn.org/stable/)
 - [tabulate](http://txt.arboreus.com/2013/03/13/pretty-print-tables-in-python.html)
+
 In this analysis, some notion of statistics and hypothesis test are used but are very easy to follow. This [handbook of statistics](http://www.biostathandbook.com/index.html) can be used as a reference to explain basics.
 
 ## Warm up
