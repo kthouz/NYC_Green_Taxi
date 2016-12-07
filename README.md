@@ -35,7 +35,7 @@ warnings.filterwarnings('ignore')
 ```
 # Analysis
 
-In this notebook, I will explore data on New York City Green Taxi. I will start with some warm up questions about the dataset. Later, I will build a model to predict the percentage tip a driver would exepect on each trip. The code is fully written in python with few additional open-source libraries easy to install. 
+In this notebook, I will explore data on New York City Green Taxi of [september 2015](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml). I will start with some warm up questions about the dataset. Later, I will build a model to predict the percentage tip a driver would exepect on each trip. The code is fully written in python with few additional open-source libraries easy to install. 
 - [shapely](https://pypi.python.org/pypi/Shapely)
 - [scikit learn](http://scikit-learn.org/stable/)
 - [tabulate](http://txt.arboreus.com/2013/03/13/pretty-print-tables-in-python.html)
