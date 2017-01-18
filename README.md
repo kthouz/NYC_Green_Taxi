@@ -1,7 +1,5 @@
 # [NYC Green Taxi](https://github.com/kthouz/NYC_Green_Taxi)#
 
-This [repo](https://github.com/kthouz/NYC_Green_Taxi) contains submissions files to the Capital One data science challenge.
-
 ## Contents of the repo ##
 
 1. [The report](https://github.com/kthouz/NYC_Green_Taxi/blob/master/README.md) in .md format in the subdir /NYC Green Taxi/NYC Green Taxi.md
