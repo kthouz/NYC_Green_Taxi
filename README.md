@@ -4,7 +4,7 @@
 
 1. [The report](https://github.com/kthouz/NYC_Green_Taxi/blob/master/README.md) in .md format in the subdir /NYC Green Taxi/NYC Green Taxi.md
 2. NYC Green Taxi ipython notebook [NYC Green Taxi.ipynb](https://github.com/kthouz/NYC_Green_Taxi/blob/master/NYC%20Green%20Taxi.ipynb)
-3. [Shiny App](https://github.com/kthouz/NYC_Green_Taxi/blob/master/visapp.R) for visualization. Try it at my my [shinyapp webpage](camillegirabawe.shinyapps.io/nycgreentaxi/)
+3. [Shiny App](https://github.com/kthouz/NYC_Green_Taxi/blob/master/visapp.R) for visualization. Try it at my my [shinyapp webpage](https://camillegirabawe.shinyapps.io/nycgreentaxi/)
 4. The script to run predictions [tip_predictor.py](https://github.com/kthouz/NYC_Green_Taxi/blob/master/tip_predictor.py)
 5. The pickle of my classifier model [my_classifier.pkl](https://github.com/kthouz/NYC_Green_Taxi/blob/master/my_classifier.pkl)
 6. The pickle of my regression model [my_regressor.pkl](https://bitbucket.org/cgirabawe/nyc-taxi/src/18fcf8b4aef4dd7f3fb6b834e36eaff92f5908db/my_regressor.pkl?at=master&fileviewer=file-view-default)
