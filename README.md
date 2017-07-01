@@ -1,19 +1,18 @@
-# [NYC Green Taxi](https://bitbucket.org/cgirabawe/nyc-taxi/src/f0ec01999d9b?at=master)#
-
-This [repo](https://bitbucket.org/cgirabawe/nyc-taxi/src/f0ec01999d9b?at=master) contains submissions files to the Capital One data science challenge.
+# [NYC Green Taxi](https://github.com/kthouz/NYC_Green_Taxi)#
 
 ## Contents of the repo ##
 
-1. [The report](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b/NYC%20Green%20Taxi/NYC%20Green%20Taxi.md?at=master&fileviewer=file-view-default) in .md format in the subdir /NYC Green Taxi/NYC Green Taxi.md
-2. NYC Green Taxi ipython notebook (NYC Green Taxi.ipynb)
-3. The script to run predictions (tip_predictor.py)
-4. The pickle of my classifier model (my_classifier.pkl)
-5. The pickle of my regression model (my_regressor.pkl)
-6. A notebook example of how use tip_predictor.py to make predictions (test.ipynb)
-7. A [csv](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b/submission.csv?at=master) of predictions made on the 2015 September dataset. This has two columns. First if transaction index, second is the predicted percentage tip
-8. A [schema](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b/schema.png?at=master&fileviewer=file-view-default) of the directory
+1. [The report](https://github.com/kthouz/NYC_Green_Taxi/blob/master/README.md) in .md format in the subdir /NYC Green Taxi/NYC Green Taxi.md
+2. NYC Green Taxi ipython notebook [NYC Green Taxi.ipynb](https://github.com/kthouz/NYC_Green_Taxi/blob/master/NYC%20Green%20Taxi.ipynb)
+3. [Shiny App](https://github.com/kthouz/NYC_Green_Taxi/blob/master/visapp.R) for visualization. Try it at my my [shinyapp webpage](https://camillegirabawe.shinyapps.io/nycgreentaxi/)
+4. The script to run predictions [tip_predictor.py](https://github.com/kthouz/NYC_Green_Taxi/blob/master/tip_predictor.py)
+5. The pickle of my classifier model [my_classifier.pkl](https://github.com/kthouz/NYC_Green_Taxi/blob/master/my_classifier.pkl)
+6. The pickle of my regression model [my_regressor.pkl](https://bitbucket.org/cgirabawe/nyc-taxi/src/18fcf8b4aef4dd7f3fb6b834e36eaff92f5908db/my_regressor.pkl?at=master&fileviewer=file-view-default)
+7. A notebook example of how use tip_predictor.py to make predictions [test.ipynb](https://github.com/kthouz/NYC_Green_Taxi/blob/master/test.ipynb)
+8. A [csv](https://github.com/kthouz/NYC_Green_Taxi/blob/master/submission.csv) of predictions made on the 2015 September dataset. This has two columns. First if transaction index, second is the predicted percentage tip
 
-This entire [repo](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b?at=master) is also available on my bitbucket
+
+**Note:** This entire [repo](https://bitbucket.org/cgirabawe/nyc-taxi/src/da1c7b92f02cb82a432d78c44abcea0e014f141b?at=master) is also available on my bitbucket
 
 ```python
 import pandas as pd
@@ -35,10 +34,12 @@ warnings.filterwarnings('ignore')
 ```
 # Analysis
 
-In this notebook, I will explore data on New York City Green Taxi. I will start with some warm up questions about the dataset. Later, I will build a model to predict the percentage tip a driver would exepect on each trip. The code is fully written in python with few additional open-source libraries easy to install. 
+In this notebook, I will explore data on New York City Green Taxi of [september 2015](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml). I will start with some warm up questions about the dataset. Later, I will build a model to predict the percentage tip a driver would exepect on each trip. The code is fully written in python with few additional open-source libraries easy to install. 
 - [shapely](https://pypi.python.org/pypi/Shapely)
 - [scikit learn](http://scikit-learn.org/stable/)
 - [tabulate](http://txt.arboreus.com/2013/03/13/pretty-print-tables-in-python.html)
+
+In this analysis, some notion of statistics and hypothesis test are used but are very easy to follow. This [handbook of statistics](http://www.biostathandbook.com/index.html) can be used as a reference to explain basics.
 
 ## Warm up
 
